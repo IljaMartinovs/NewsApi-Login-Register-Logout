@@ -4,6 +4,7 @@ require_once "vendor/autoload.php";
 session_start();
 
 use App\Template;
+use App\Controllers\ErrorController;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
