@@ -28,13 +28,28 @@ $uri = rawurldecode($uri);
 
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
-    case FastRoute\Dispatcher::NOT_FOUND:
+//     case FastRoute\Dispatcher::NOT_FOUND:
+//         //404
+//         break;
+//     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+//         $allowedMethods = $routeInfo[1];
+//         //405
+//         break;
+       case FastRoute\Dispatcher::NOT_FOUND:
         //404
-        break;
-    case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+       return (new ErrorController())->index(
+        'page not found',
+        'Go Back',
+        '/' 
+       );
+      case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
         //405
-        break;
+       return (new ErrorController())->index(
+         'method not allowed',
+          'Go Back',
+          '/'
+        );
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
