@@ -6,9 +6,9 @@ use App\Template;
 
 class ErrorController
 {
-    public function index(string $errorMessage, string $buttonName, string $buttonLink) //: Template
+    public function index(string $errorMessage, string $buttonName, string $buttonLink): void
     {
-        return (new Template("error.twig", [
+         (new Template("error.twig", [
                 'errorMessage' => $errorMessage,
                 'buttonName' => $buttonName,
                 'buttonLink' => $buttonLink]

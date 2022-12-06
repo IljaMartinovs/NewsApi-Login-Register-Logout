@@ -6,8 +6,8 @@ class LogoutController
 {
     public function logout()
     {
-        unset($_SESSION['name']);
-        //session_destroy();
+       // unset($_SESSION['name']);
+        session_destroy();
         header('Location: /');
     }
 }

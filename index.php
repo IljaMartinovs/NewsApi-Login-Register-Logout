@@ -3,6 +3,7 @@
 require_once "vendor/autoload.php";
 session_start();
 
+use App\Controllers\ErrorController;
 use App\Template;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -17,8 +18,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $rou
     $route->addRoute('GET', '/logout', ['App\Controllers\LogoutController', 'logout']);
     $route->addRoute('GET', '/profile', ['App\Controllers\ProfileController', 'show']);
     $route->addRoute('GET', '/edit', ['App\Controllers\EditController', 'show']);
-    $route->addRoute('POST', '/edit', ['App\Controllers\EditController', 'edit']);
-
+    $route->addRoute('POST', '/edit', ['App\Controllers\EditController', 'store']);
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -33,10 +33,20 @@ $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
         //404
+         (new ErrorController())->index(
+        'page not found',
+        'Go Back',
+        '/'
+       );
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
         //405
+         (new ErrorController())->index(
+            'method not allowed',
+            'Go Back',
+            '/'
+        );
         break;
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
@@ -45,6 +55,7 @@ switch ($routeInfo[0]) {
         $info = (new $controller)->{$method}();
         if ($info instanceof Template) {
             $info->render();
+            unset($_SESSION['error']);
         }
         break;
 }

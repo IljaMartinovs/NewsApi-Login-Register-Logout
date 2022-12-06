@@ -2,13 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Database;
 use App\Services\RegistrationService;
 use App\Services\RegistrationServiceRequest;
 use App\Template;
 
 class RegistrationController
 {
-
     public function show(): Template
     {
         return new Template('registration.twig');

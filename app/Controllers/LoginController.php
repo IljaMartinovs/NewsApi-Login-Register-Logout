@@ -15,12 +15,12 @@ class LoginController
 
     public function store()
     {
-       $loginService = new LoginService();
-       $loginService->execute(
-           new LoginServiceRequest(
-               $_POST['email'],
-               $_POST['password']
-           )
-       );
+        $loginService = new LoginService();
+        $loginService->execute(
+            new LoginServiceRequest(
+                $_POST['email'],
+                $_POST['password']
+            )
+        );
     }
 }

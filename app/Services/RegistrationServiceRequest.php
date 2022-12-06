@@ -2,15 +2,12 @@
 
 namespace App\Services;
 
-use App\Template;
-
 class RegistrationServiceRequest
 {
     private string $name;
     private string $email;
     private string $password;
     private string $repeatedPassword;
-
 
     public function __construct(string $name, string $email, string $password, string $repeatedPassword)
     {
